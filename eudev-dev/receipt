@@ -1,0 +1,23 @@
+# SliTaz package receipt.
+
+PACKAGE="eudev-dev"
+VERSION="3.2.5"
+CATEGORY="development"
+SHORT_DESC="Programs for dynamic creation of devices nodes"
+MAINTAINER="shann@slitaz.org"
+LICENSE="GPL2"
+WANTED="eudev"
+WEB_SITE="https://dev.gentoo.org/~blueness/eudev/"
+HOST_ARCH="i486 arm x86_64"
+
+DEPENDS="eudev pkg-config"
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+	mkdir -p $fs/usr/lib/pkgconfig $fs/usr/include
+	cp -a $install/usr/lib/libudev* $fs/usr/lib
+	cp -a $install/usr/lib/pkgconfig/libudev.pc $fs/usr/lib/pkgconfig
+	cp -a $install/usr/share/pkgconfig/* $fs/usr/lib/pkgconfig
+	cp -a $install/usr/include/*udev.h $fs/usr/include
+}

@@ -1,0 +1,36 @@
+# SliTaz package receipt.
+
+PACKAGE="m4"
+VERSION="1.4.18"
+CATEGORY="development"
+SHORT_DESC="GNU traditional Unix macro processor."
+MAINTAINER="shann@slitaz.org"
+LICENSE="GPL3"
+TARBALL="$PACKAGE-$VERSION.tar.gz"
+WEB_SITE="http://www.gnu.org/software/m4/"
+WGET_URL="$GNU_MIRROR/$PACKAGE/$TARBALL"
+HOST_ARCH="i486 arm x86_64"
+
+DEPENDS="glibc-base"
+BUILD_DEPENDS=""
+
+# Rules to configure and make the package.
+compile_rules()
+{
+	cd $src
+
+	# update for glibc libio.h removal in 2.28+, rhbz#1573342
+	sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+	echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+
+	./configure $CONFIGURE_ARGS &&
+	make &&
+	make install
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+	mkdir -p $fs/usr
+	cp -a $install/usr/bin $fs/usr
+}

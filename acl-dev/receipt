@@ -1,0 +1,21 @@
+# SliTaz package receipt.
+
+PACKAGE="acl-dev"
+VERSION="2.2.53"
+CATEGORY="development"
+SHORT_DESC="Development files for acl."
+MAINTAINER="shann@slitaz.org"
+LICENSE="LGPL2.1 GPL2"
+WEB_SITE="http://savannah.nongnu.org/projects/acl/"
+HOST_ARCH="i486 arm x86_64"
+
+WANTED="acl"
+DEPENDS="acl attr-dev"
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+	mkdir -p $fs/usr/lib
+	cp -a $install/usr/include $fs/usr
+	cp -a $install/usr/lib/*.*a $fs/usr/lib
+}

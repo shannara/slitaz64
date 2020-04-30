@@ -1,0 +1,65 @@
+--- tazpkg.orig
++++ tazpkg
+@@ -23,8 +23,8 @@
+ . /etc/slitaz/slitaz.conf
+ . /etc/slitaz/tazpkg.conf
+ 
+-. /lib/libtaz.sh
+-. /usr/lib/slitaz/libpkg.sh
++. /lib64/libtaz.sh
++. /usr/lib64/slitaz/libpkg.sh
+ 
+ # Internationalization.
+ #. /usr/bin/gettext.sh
+@@ -278,7 +278,7 @@
+ {
+ 	for i in $2$INSTALLED/${1%%-*}*; do
+ 		[ -d $i ] || continue
+-		if [ "$1" = "$(package_fullname_in_dir $i)" ]; then
++		if [ "${1%-*}" = "$(package_fullname_in_dir $i)" ]; then
+ 			echo $i
+ 			return
+ 		fi
+@@ -291,7 +291,7 @@
+ 	if [ -n "$(get_installed_package_pathname $PACKAGE $1)" ]; then
+ 		newline
+ 		cat << EOT
+-$(colorize 34 $PACKAGE) $(gettext "package is already installed.
++$(colorize 34 ${PACKAGE%-*}) $(gettext "package is already installed.
+ You can use the --forced option to force installation.")
+ EOT
+ 		newline
+@@ -459,6 +459,9 @@
+ 			http://*|ftp://*)
+ 				wget -O $2 ${i%packages/*}packages/get/$1 &&
+ 				return 0 ;;
++			https://*)
++				wget --no-check-certificate -nv -O $2 ${i%packages/*}packages/get/$1 &&
++				return 0 ;;
+ 			esac
+ 		done
+ 	done
+@@ -476,6 +479,7 @@
+ 		case "$i" in
+ 			# Mirror URL can have a trailing slash or not.
+ 			http://*|ftp://*) busybox wget -c ${i%/}/$@ && break ;;
++			https://*)  wget --no-check-certificate -nv -c ${i%/}/$@ && break ;;
+ 			*) ln -sf $i/$1 . && break ;;
+ 		esac
+ 	done
+@@ -674,6 +678,15 @@
+ 		status
+ 	fi
+ 	action "Installing \$PACKAGE..."
++
++       # If we on x86_64, move /lib,/usr/lib as /lib64,/usr/lib64
++       if [ -d $ROOT/lib64 ]; then
++           [ -d fs/lib ] && [ ! -h fs/lib ] && [ ! -d fs/lib64 ] && mv fs/lib fs/lib64
++           [ -d fs/usr/lib ] && [ ! -h fs/usr/lib ] && [ ! -d fs/usr/lib64 ] && mv fs/usr/lib fs/usr/lib64
++           [ -d fs/lib ] && [ -d fs/lib64 ] && mv fs/lib/* fs/lib64/ && rm -rf fs/lib
++           [ -d fs/usr/lib ] && [ -d fs/usr/lib64 ] && mv fs/usr/lib/* fs/usr/lib64/ && rm -rf fs/usr/lib
++       fi
++
+ 	[ "$(busybox ls fs/* 2> /dev/null)" ] && cp -a fs/* $ROOT/
+ 	status
+ 	if [ -s files2remove.list ]; then
