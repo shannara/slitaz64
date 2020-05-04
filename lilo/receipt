@@ -1,0 +1,24 @@
+# SliTaz package receipt.
+
+PACKAGE="lilo"
+VERSION="24.2"
+CATEGORY="system-tools"
+SHORT_DESC="LInux boot LOader"
+MAINTAINER="shann@slitaz.org"
+LICENSE="BSD"
+WEB_SITE="https://www.joonet.de/lilo/"
+TARBALL="$PACKAGE-$VERSION.tar.gz"
+WGET_URL="https://www.joonet.de/$PACKAGE/ftp/sources/$TARBALL"
+HOST_ARCH="arm i486 x86_64"
+
+BUILD_DEPENDS="dev86 libdevmapper"
+
+compile_rules() {
+	make alles &&
+	make install
+}
+
+genpkg_rules() {
+	cp -a $install/sbin $fs
+	DEPENDS="libdevmapper"
+}
