@@ -19,6 +19,8 @@ compile_rules() {
 }
 
 genpkg_rules() {
+	mkdir $fs/etc
+	cp $stuff/lilo.conf $fs/etc
 	cp -a $install/sbin $fs
 	DEPENDS="libdevmapper"
 }
