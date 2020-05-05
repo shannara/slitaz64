@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="glibc"
-VERSION="2.28"
+VERSION="2.31"
 CATEGORY="meta"
 SHORT_DESC="The GNU C libraries. This package is used to compile the libc."
 MAINTAINER="shann@slitaz.org"
@@ -12,7 +12,7 @@ WGET_URL="$GNU_MIRROR/$PACKAGE/$TARBALL"
 
 DEPENDS="glibc-base glibc-locale glibc-dev"
 BUILD_DEPENDS="linux-api-headers autoconf bash advancecomp"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # Genpkg order for tazwok.
 COOK_OPT="genpkg=glibc-base:glibc-extra-samba:glibc-locale:glibc-dev"
@@ -25,17 +25,8 @@ cook_tmp_toolchain()
 	# Build in a separate directory.
 	mkdir ../glibc-build && cd ../glibc-build
 
-	# glibc no longer support i386, so use -march=i486 for better compatibility.
-	# If i686 ???
 	unset CFLAGS CXXFLAGS
-	case $ARCH in
-		i386|i486)
-			echo "CFLAGS += -O2 -march=i486 -mtune=i486" > configparms ;;
-		x86_64)
-			echo "CFLAGS += -O2 -march=x86-64 -mtune=generic" > configparms ;;
-		*)
-			echo "CFLAGS += -O2 -march=$ARCH -mtune=$ARCH" > configparms ;;
-	esac
+	echo "CFLAGS += -O2 -march=x86-64 -mtune=generic" > configparms
 
 	{ $src/configure \
 		--host=$HOST_SYSTEM \
@@ -75,18 +66,13 @@ compile_rules()
 	# "The higher the VERSION number is, the less compatibility code is
 	# added, and the faster the code gets."
 	unset CFLAGS CXXFLAGS
-	case "$ARCH" in
-		i386|i486)
-			echo "CFLAGS += -O2 -march=i486 -mtune=i486" > configparms ;;
-		x86_64)
-			echo "CFLAGS += -O2 -march=x86-64 -mtune=generic" > configparms ;;
-		*)
-			echo "CFLAGS += -O2 -march=$ARCH -mtune=$ARCH" > configparms ;;
-	esac
+	echo "CFLAGS += -O2 -march=x86-64 -mtune=generic" > configparms
+
 	{ $src/configure \
 		--disable-profile \
 		--enable-add-ons \
-		--enable-kernel=2.6.30 \
+		--enable-kernel=3.16.55 \
+		--enable-stack-protector=strong \
 		--libexecdir=/usr/lib/glibc \
 		--build=$HOST_SYSTEM \
 		--host=$HOST_SYSTEM \

@@ -2,7 +2,7 @@
 
 PACKAGE="gcc"
 SOURCE="gcc"
-VERSION="8.2.0"
+VERSION="9.2.0"
 CATEGORY="development"
 SHORT_DESC="The the GNU Compiler Collection."
 MAINTAINER="shann@slitaz.org"
@@ -11,7 +11,7 @@ TARBALL="$SOURCE-$VERSION.tar.xz"
 WEB_SITE="http://gcc.gnu.org/"
 WGET_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$VERSION/$TARBALL"
 TAGS="compiler C C++"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # We need gawk since busybox awk is not sufficient. We have BUILD_DEPENDS
 # for cookutils that are not used by tazwok/cook-toolchain since it install

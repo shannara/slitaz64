@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="binutils"
-VERSION="2.31.1"
+VERSION="2.34"
 CATEGORY="development"
 SHORT_DESC="GNU assembler, linker and binary utilities."
 MAINTAINER="shann@slitaz.org"
@@ -12,21 +12,16 @@ WGET_URL="$GNU_MIRROR/$PACKAGE/$TARBALL"
 #WGET_URL="http://www.kernel.org/pub/linux/devel/binutils/$TARBALL"
 PROVIDE="libbfd"
 TAGS="assembler linker"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="glibc zlib"
 BUILD_DEPENDS="glibc-dev zlib-dev texinfo"
-
-# Handle cross compilation.
-case "$ARCH" in
-	arm) BUILD_DEPENDS="" ;;
-esac
 
 # Rules to configure and make the package.
 compile_rules()
 {
 	case "$ARCH" in
-		i?86|x86_64) ARCH_ARGS="--disable-werror" ;;
+		x86_64) ARCH_ARGS="--disable-werror" ;;
 	esac
 	mkdir -p ../binutils-build && cd ../binutils-build
 	$src/configure \

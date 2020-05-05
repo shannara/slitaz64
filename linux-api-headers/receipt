@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="linux-api-headers"
-VERSION="3.16.55"
+VERSION="5.4.38"
 KBASEVER="${VERSION:0:3}"
 CATEGORY="development"
 SHORT_DESC="Kernel headers sanitized for use in userspace."
@@ -10,11 +10,11 @@ LICENSE="GPL2"
 SOURCE="linux"
 TARBALL="$SOURCE-$VERSION.tar.xz"
 WEB_SITE="http://www.kernel.org/"
-WGET_URL="http://www.kernel.org/pub/linux/kernel/v3.0/$TARBALL"
+WGET_URL="http://www.kernel.org/pub/linux/kernel/v5.x/$TARBALL"
 PROVIDE="linux-headers"
 
 BUILD_DEPENDS="bash"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # Rules to compile & install the temporary toolchain.
 cook_tmp_toolchain()

@@ -1,14 +1,14 @@
 # SliTaz package receipt.
 
 PACKAGE="libgomp"
-VERSION="8.2.0"
+VERSION="9.2.0"
 CATEGORY="development"
 SHORT_DESC="API specification for parallel programming."
 MAINTAINER="shann@slitaz.org"
 LICENSE="GPL2"
 WEB_SITE="http://gcc.gnu.org/"
 WANTED="gcc"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # Rules to gen a SliTaz package suitable for Tazpkg.
 genpkg_rules()
