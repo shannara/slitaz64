@@ -1,18 +1,18 @@
 # SliTaz package receipt.
 
-PACKAGE="python3"
-VERSION="3.7.2"
+PACKAGE="python"
+VERSION="2.7.5"
 CATEGORY="development"
-SHORT_DESC="The Python 3 programming language."
+SHORT_DESC="The Python programming language."
 MAINTAINER="shann@slitaz.org"
-LICENSE="GPL"
+LICENSE="PSL"
 SOURCE="Python"
-TARBALL="$SOURCE-$VERSION.tar.xz"
+TARBALL="$SOURCE-$VERSION.tar.bz2"
 WEB_SITE="http://www.python.org/"
 WGET_URL="https://www.python.org/ftp/python/$VERSION/$TARBALL"
 HOST_ARCH="i486 arm x86_64"
 
-RELATED="python3-dev python3-idle" # version must match
+RELATED="python-dev python-idle" # version must match
 DEPENDS="openssl bzlib readline sqlite zlib ncursesw gdbm libffi"
 BUILD_DEPENDS="openssl-dev bzip2-dev readline-dev sqlite-dev zlib-dev \
 ncursesw-dev tcl-dev db-dev gdbm-dev libffi-dev"
@@ -20,6 +20,12 @@ ncursesw-dev tcl-dev db-dev gdbm-dev libffi-dev"
 # Rules to configure and make the package.
 compile_rules()
 {
+	# Temporary workaround for FS#22322
+	# See http://bugs.python.org/issue10835 for upstream report
+	sed -i "/progname =/s/python/python${_pybasever}/" Python/pythonrun.c
+
+	# Enable built-in SQLite3 module to load extensions (fix FS#22122)
+	sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" setup.py
 
 	case "$ARCH" in
 		arm*)
@@ -65,49 +71,53 @@ EOT
 			make DESTDIR=$DESTDIR install || exit 1 ;;
 		i?86|x86_64)
 			CFLAGS+=" -fPIC"
+			# Patch to use lib64
+			#patch -p1 < $stuff/python-x86_64.patch || exit 1
+			# --libdir=/usr/lib64
 			./configure \
 				--enable-shared \
-				--with-system-expat \
-				--with-system-ffi \
-				--without-ensurepip \
 				--build=${HOST_SYSTEM} \
 				--host=${HOST_SYSTEM} &&
 				make &&	make DESTDIR=$DESTDIR install ;;
 	esac
-
-	chmod 755 $install/usr/lib/libpython${VERSION%.*}m.so
-	chmod 755 $install/usr/lib/libpython${VERSION%%.*}.so
-	find $install -type f -name "*.pyc" -delete
 }
 
 # Rules to gen a SliTaz package suitable for Tazpkg.
 genpkg_rules()
 {
 	python_version=${VERSION:0:3}
-	mkdir -p $fs/usr/include/python${python_version}m
+	mkdir -p $fs/usr/include/${PACKAGE}$python_version
 	cp -a $install/usr/bin $fs/usr
 	cp -a $install/usr/lib $fs/usr
 	# needed for mercurial to work now
-	cp -a $install/usr/include/python${python_version}m/pyconfig.h \
-		$fs/usr/include/python${python_version}m
+	cp -a $install/usr/include/${PACKAGE}$python_version/pyconfig.h \
+		$fs/usr/include/${PACKAGE}$python_version
 	rm -f $fs/usr/bin/*-config
 	# Split IDLE with TK dep
 	rm -f $fs/usr/bin/idle
-	rm -rf $fs/usr/lib/python3.7/idlelib
+	rm -rf $fs/usr/lib/python2.7/idlelib
+
+	# Symlinks to work with python3
+	mv $fs/usr/bin/2to3 $fs/usr/bin/2to3-2.7
 }
 
-# Post install commands for Tazpkg.       
-pre_install()  
+# Post install commands for Tazpkg.
+pre_install()
 {
-        # Removed symlinks if python2 installed
-        if [ -d ${1}${INSTALLED}/python2 ]; then                   
-            rm -f /usr/bin/2to3
-        fi
+        # Removed symlinks if python3 installed
+        if [ -d ${1}${INSTALLED}/python3 ]; then
+	    rm -f /usr/bin/2to3
+	fi 
+}
+
+post_install()
+{
+	ln -s /usr/bin/2to3-2.7 /usr/bin/2to3
 }
 
 post_remove()
 {
-        if [ -d ${1}${INSTALLED}/python2 ]; then         
-            ln -s /usr/bin/2to3-2.7 /usr/bin/2to3
-        fi
+	if [ -d ${1}${INSTALLED}/python3 ]; then
+	    ln -sf /usr/bin/2to3-3.7 /usr/bin/2to3
+	fi
 }
