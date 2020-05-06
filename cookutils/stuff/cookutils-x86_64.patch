@@ -1,0 +1,96 @@
+--- cook.orig
++++ cook
+@@ -358,6 +358,16 @@
+ 	separator; newline
+ }
+ 
++# A bit smarter function than the classic `cp` command                                                                       
++                                                                                                                             
++copy() {                                                                                                                     
++        if [ "$(stat -c %h -- "$1")" -gt 1 ]; then                                                                           
++                cp -al "$1" "$2"        # copy hardlinks                                                                     
++        else                                                                                                                 
++                cp -a  "$1" "$2"        # copy generic files                                                                 
++        fi                                                                                                                   
++}
++
+ # Copy all generic files (locale, pixmaps, .desktop). We use standard paths,
+ # so some packages need to copy these files with the receipt and genpkg_rules.
+ copy_generic_files()
+@@ -421,6 +431,22 @@
+ 	fi
+ }
+ 
++# Function to use in genpkg_rules() to copy specified files from $install to $fs                                             
++cook_copy_files() {                                                                                                          
++        action 'Copying files...'                                                                                            
++        cd $install                                                                                                          
++        local i j                                                                                                            
++        IFS=$'\n'                                                                                                            
++        for i in $@; do                                                                                                      
++                for j in $(find . -name $i ! -type d); do                                                                    
++                        mkdir -p  $fs$(dirname ${j#.})                                                                       
++                        copy $j $fs$(dirname ${j#.})                                                                         
++                done                                                                                                         
++        done                                                                                                                 
++        cd - >/dev/null                                                                                                      
++        status                                                                                                               
++}
++
+ # Find and strip: --strip-all (-s) or --strip-debug on static libs as well
+ # as removing uneeded files like in Python packages. Cross compiled binaries
+ # must be stripped with cross-tools aka $ARCH-slitaz-*-strip
+@@ -484,7 +510,7 @@
+ 
+ 	# Handle cross-tools.
+ 	case "$ARCH" in
+-		arm|x86_64)
++		arm)
+ 			# CROSS_COMPILE is used by at least Busybox and the kernel to set
+ 			# the cross-tools prefix. Sysroot is the root of our target arch
+ 			sysroot=$CROSS_TREE/sysroot
+--- cook.conf.orig
++++ cook.conf
+@@ -38,7 +38,7 @@
+ aufs-utils aufs m4 syslinux-extra pcre pcre-dev bash xorg-dev mercurial"
+ 
+ # Target host architecture type (Glibc doesn't support i386 anymore).
+-ARCH="i486"
++ARCH="x86_64"
+ 
+ # Build and host. These options are for cross-compiling. If you specify
+ # both options and BUILD_SYSTEM is different from HOST_SYSTEM, configure
+@@ -71,7 +71,7 @@
+ #
+ #MAKEFLAGS="-j$(($(grep processor /proc/cpuinfo | wc -l)+1))"
+ MAKEFLAGS="-j$(grep processor /proc/cpuinfo | wc -l)"
+-CFLAGS="-march=$ARCH -Os -pipe -fomit-frame-pointer"
++CFLAGS="-march=nocona -Os -pipe -fomit-frame-pointer"
+ CXXFLAGS="$CFLAGS"
+ 
+ # Binutils 2.22 breaks many packages built without LDFLAGS set correctly.
+@@ -86,8 +86,8 @@
+ CONFIGURE_ARGS="--build=$BUILD_SYSTEM --host=$HOST_SYSTEM"
+ 
+ # Mirrors URLs. To download sources near your location.
+-GNU_MIRROR="ftp://sunsite.cnlab-switch.ch/mirror/gnu"
+-SF_MIRROR="http://switch.dl.sourceforge.net/sourceforge"
++GNU_MIRROR="http://mirrors.ocf.berkeley.edu/gnu"
++SF_MIRROR="http://netix.dl.sourceforge.net/sourceforge"
+ XORG_MIRROR="http://ftp.x.org/pub/individual"
+ GNOME_MIRROR="http://ftp.gnome.org/pub/GNOME/sources"
+
+--- a/lib/libcook.sh
++++ b/lib/libcook.sh
+@@ -6,8 +6,8 @@
+ # Copyright (C) SliTaz GNU/Linux - GNU gpl v3
+ # Author: Christophe Lincoln <pankso@slitaz.org>
+ #
+-. /lib/libtaz.sh
+-. /usr/lib/slitaz/libpkg.sh
++. /lib64/libtaz.sh
++. /usr/lib64/slitaz/libpkg.sh
+ . /etc/slitaz/slitaz.conf
+ 
+ # System wide config can be overwriten by a cook.conf in current path.
+
