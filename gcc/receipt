@@ -31,6 +31,11 @@ compile_rules()
 
 	sed -i 's/^T_CFLAGS =$/& -fomit-frame-pointer/' gcc/Makefile.in
 
+        # Patch from Gentoo for GCC 9.2.0
+        patch -p1 < $stuff/gcc-9.2.0-neg-insn-cost.patch
+        patch -p1 < $stuff/gcc-9.2.0-libsanitizer-1.patch
+        patch -p1 < $stuff/gcc-9.2.0-libsanitizer-2.patch
+
 	mkdir -p ../gcc-build && cd ../gcc-build
 
 	$src/configure \
