@@ -1,14 +1,14 @@
 # SliTaz package receipt.
 
 PACKAGE="openssl-dev"
-VERSION="1.1.0i"
+VERSION="1.1.1g"
 CATEGORY="development"
 SHORT_DESC="Open source Secure Sockets Layer devel files."
 MAINTAINER="shann@slitaz.org"
 LICENSE="BSD"
 WANTED="openssl"
 WEB_SITE="http://www.openssl.org/"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="libcrypto-dev pkg-config"
 

@@ -1,14 +1,14 @@
 # SliTaz package receipt.
 
 PACKAGE="libcrypto"
-VERSION="1.1.0i"
+VERSION="1.1.1g"
 CATEGORY="security"
 SHORT_DESC="General purpose cryptographic shared library."
 MAINTAINER="shann@slitaz.org"
 LICENSE="BSD"
 WANTED="openssl"
 WEB_SITE="http://www.openssl.org/"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # Rules to gen a SliTaz package suitable for Tazpkg.
 genpkg_rules()

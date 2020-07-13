@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="openssl"
-VERSION="1.1.0i"
+VERSION="1.1.1g"
 CATEGORY="security"
 SHORT_DESC="Open source Secure Sockets Layer."
 MAINTAINER="shann@slitaz.org"
@@ -10,7 +10,7 @@ TARBALL="$PACKAGE-$VERSION.tar.gz"
 WEB_SITE="http://www.openssl.org/"
 WGET_URL="http://www.openssl.org/source/$TARBALL"
 TAGS="ssl security"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="libcrypto libssl"
 BUILD_DEPENDS="perl zlib-dev"
