@@ -1,16 +1,16 @@
 # SliTaz package receipt.
 
 PACKAGE="bzip2"
-VERSION="1.0.6"
+VERSION="1.0.8"
 CATEGORY="utilities"
 SHORT_DESC="High-quality data compressor."
 MAINTAINER="shann@slitaz.org"
 LICENSE="BSD"
 TARBALL="$PACKAGE-$VERSION.tar.gz"
 WEB_SITE="http://www.bzip.org/"
-WGET_URL="$SF_MIRROR/$PACKAGE/$TARBALL"
+WGET_URL="https://www.sourceware.org/pub/$PACKAGE/$TARBALL"
 TAGS="compression archive"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="bzlib"
 BUILD_DEPENDS=""
@@ -24,20 +24,11 @@ compile_rules()
 	sed -i 's/cq/qc/' Makefile
 
 	# No configure script, we must used CC, AR and RANLIB set by cook.
-	case "$ARCH" in
-		arm*)
-			make -f Makefile-libbz2_so CC=${CC} AR=${AR} RANLIB=${RANLIB} &&
-			make clean && make CC=${CC} AR=${AR} RANLIB=${RANLIB} ;;
-		x86_64)
-                        CC=${HOST_SYSTEM}-gcc
-			AR=${HOST_SYSTEM}-ar
-			RANLIB=${HOST_SYSTEM}-ranlib
-                        make -f Makefile-libbz2_so CC=${CC} AR=${AR} RANLIB=${RANLIB} &&
-                        make clean && make CC=${CC} AR=${AR} RANLIB=${RANLIB} ;;
-		*)
-			make -f Makefile-libbz2_so &&
-			make clean && make ;;
-	esac
+        CC=${HOST_SYSTEM}-gcc
+	AR=${HOST_SYSTEM}-ar
+	RANLIB=${HOST_SYSTEM}-ranlib
+        make -f Makefile-libbz2_so CC=${CC} AR=${AR} RANLIB=${RANLIB} &&
+        make clean && make CC=${CC} AR=${AR} RANLIB=${RANLIB}
 }
 
 # Just to be sure when cross-compiling.

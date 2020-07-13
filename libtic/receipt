@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="libtic"
-VERSION="6.1"
+VERSION="6.2"
 CATEGORY="development"
 SHORT_DESC="Low-level terminfo library."
 MAINTAINER="shann@slitaz.org"

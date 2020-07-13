@@ -1,14 +1,14 @@
 # SliTaz package receipt.
 
 PACKAGE="readline-dev"
-VERSION="7.0"
+VERSION="8.0"
 CATEGORY="development"
 SHORT_DESC="GNU readline devel files."
 MAINTAINER="shann@slitaz.org"
 LICENSE="GPL3"
 WANTED="readline"
 WEB_SITE="http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # Rules to gen a SliTaz package suitable for Tazpkg.
 genpkg_rules()

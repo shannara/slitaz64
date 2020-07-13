@@ -9,7 +9,7 @@ LICENSE="zlib/libpng"
 TARBALL="$PACKAGE-$VERSION.tar.xz"
 WEB_SITE="http://zlib.net"
 WGET_URL="http://www.zlib.net/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="glibc-base"
 BUILD_DEPENDS=""
@@ -18,11 +18,6 @@ BUILD_DEPENDS=""
 compile_rules()
 {
 	cd $src
-	case "$ARCH" in
-		i486)
-			# work around gcc bug; see https://bugs.archlinux.org/task/20647
-			export CFLAGS="${CFLAGS/-O2/-O3} -fno-tree-vectorize -DUNALIGNED_OK" ;;
-	esac
 	./configure --prefix=/usr --shared &&
 	make &&	make install
 }

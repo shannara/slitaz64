@@ -1,14 +1,14 @@
 # SliTaz package receipt.
 
 PACKAGE="ncurses-common"
-VERSION="6.1"
+VERSION="6.2"
 CATEGORY="base-system"
 SHORT_DESC="Common files for the ncurses and ncursesw library."
 MAINTAINER="shann@slitaz.org"
 LICENSE="MIT"
 WANTED="ncurses"
 WEB_SITE="http://invisible-island.net/ncurses/"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="glibc-base"
 

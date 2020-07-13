@@ -1,14 +1,14 @@
 # SliTaz package receipt
 
 PACKAGE="mpfr-dev"
-VERSION="4.0.1"
+VERSION="4.0.2"
 CATEGORY="development"
 SHORT_DESC="GNU Multiple Precision Arithmetic devel files."
 MAINTAINER="shann@slitaz.org"
 LICENSE="GPL3"
 WANTED="mpfr"
 WEB_SITE="http://www.mpfr.org/"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="mpfr"
 

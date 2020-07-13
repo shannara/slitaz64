@@ -10,7 +10,7 @@ TARBALL="$PACKAGE-$VERSION.NC.tar.gz"
 WEB_SITE="http://www.oracle.com/technology/software/products/berkeley-db/db/"
 WGET_URL="http://download.oracle.com/berkeley-db/$TARBALL"
 TAGS="database"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="glibc-base libdb"
 BUILD_DEPENDS=""

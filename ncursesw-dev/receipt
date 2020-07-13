@@ -1,14 +1,14 @@
 # SliTaz package receipt.
 
 PACKAGE="ncursesw-dev"
-VERSION="6.1"
+VERSION="6.2"
 CATEGORY="development"
 SHORT_DESC="Devel files for the ncursesw library."
 MAINTAINER="shann@slitaz.org"
 LICENSE="MIT"
 WANTED="ncursesw"
 WEB_SITE="http://invisible-island.net/ncurses/"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="ncursesw"
 

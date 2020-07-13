@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="ncurses"
-VERSION="6.1"
+VERSION="6.2"
 CATEGORY="base-system"
 SHORT_DESC="Library of functions to manage display on terminals."
 MAINTAINER="shann@slitaz.org"
@@ -9,7 +9,7 @@ TARBALL="$PACKAGE-$VERSION.tar.gz"
 LICENSE="MIT"
 WEB_SITE="http://invisible-island.net/ncurses/"
 WGET_URL="$GNU_MIRROR/$PACKAGE/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="ncurses-common libtinfo libtic"
 BUILD_DEPENDS=""

@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="pcre"
-VERSION="8.42"
+VERSION="8.44"
 CATEGORY="system-tools"
 SHORT_DESC="Perl 5 Compatible Regular Expression, library"
 MAINTAINER="shann@slitaz.org"
@@ -9,7 +9,7 @@ LICENSE="BSD"
 TARBALL="$PACKAGE-$VERSION.tar.bz2"
 WEB_SITE="http://www.pcre.org/"
 WGET_URL="ftp://ftp.pcre.org/pub/pcre/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # Rules to configure and make the package.
 compile_rules()

@@ -10,7 +10,7 @@ LICENSE="GPL2"
 TARBALL="$SOURCE-$VERSION.tar.gz"
 WEB_SITE="http://www.muppetlabs.com/~breadbox/software/elfkickers.html"
 WGET_URL="http://www.muppetlabs.com/~breadbox/pub/software/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 # Rules to configure and make the package.
 compile_rules()

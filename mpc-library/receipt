@@ -10,7 +10,7 @@ SOURCE="mpc"
 TARBALL="$SOURCE-$VERSION.tar.gz"
 WEB_SITE="http://www.multiprecision.org/"
 WGET_URL="$GNU_MIRROR/$SOURCE/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 #BUGS="Shared libs dont build with 0.9"
 

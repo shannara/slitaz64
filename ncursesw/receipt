@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="ncursesw"
-VERSION="6.1"
+VERSION="6.2"
 SOURCE="ncurses"
 CATEGORY="base-system"
 SHORT_DESC="Library of functions to manage display on terminals."
@@ -10,15 +10,10 @@ LICENSE="MIT"
 TARBALL="$SOURCE-$VERSION.tar.gz"
 WEB_SITE="http://invisible-island.net/ncurses/"
 WGET_URL="$GNU_MIRROR/$SOURCE/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="ncurses-common"
 BUILD_DEPENDS="gcc"
-
-case "$ARCH" in
-	arm) BUILD_DEPENDS="" ;;
-	x86_64) BUILD_DEPENDS="" ;;
-esac
 
 # Rules to configure and make the package.
 compile_rules()

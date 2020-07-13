@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="python3"
-VERSION="3.7.2"
+VERSION="3.8.3"
 CATEGORY="development"
 SHORT_DESC="The Python 3 programming language."
 MAINTAINER="shann@slitaz.org"
@@ -10,7 +10,7 @@ SOURCE="Python"
 TARBALL="$SOURCE-$VERSION.tar.xz"
 WEB_SITE="http://www.python.org/"
 WGET_URL="https://www.python.org/ftp/python/$VERSION/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 RELATED="python3-dev python3-idle" # version must match
 DEPENDS="openssl bzlib readline sqlite zlib ncursesw gdbm libffi"
@@ -75,7 +75,7 @@ EOT
 				make &&	make DESTDIR=$DESTDIR install ;;
 	esac
 
-	chmod 755 $install/usr/lib/libpython${VERSION%.*}m.so
+#	chmod 755 $install/usr/lib/libpython${VERSION%.*}m.so
 	chmod 755 $install/usr/lib/libpython${VERSION%%.*}.so
 	find $install -type f -name "*.pyc" -delete
 }
@@ -84,16 +84,18 @@ EOT
 genpkg_rules()
 {
 	python_version=${VERSION:0:3}
-	mkdir -p $fs/usr/include/python${python_version}m
-	cp -a $install/usr/bin $fs/usr
-	cp -a $install/usr/lib $fs/usr
+#	mkdir -p $fs/usr/include/python${python_version}m
+        mkdir -p $fs/usr
+        mkdir $fs/usr/bin && mkdir $fs/usr/lib
+	cp -a $install/usr/bin/* $fs/usr/bin
+	cp -a $install/usr/lib/* $fs/usr/lib
 	# needed for mercurial to work now
-	cp -a $install/usr/include/python${python_version}m/pyconfig.h \
-		$fs/usr/include/python${python_version}m
+#	cp -a $install/usr/include/python${python_version}m/pyconfig.h \
+#		$fs/usr/include/python${python_version}m
 	rm -f $fs/usr/bin/*-config
 	# Split IDLE with TK dep
-	rm -f $fs/usr/bin/idle
-	rm -rf $fs/usr/lib/python3.7/idlelib
+	rm -f $fs/usr/bin/idle*
+	rm -rf $fs/usr/lib/python3.8/idlelib
 }
 
 # Post install commands for Tazpkg.       

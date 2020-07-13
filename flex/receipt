@@ -8,8 +8,8 @@ MAINTAINER="shann@slitaz.org"
 LICENSE="BSD"
 TARBALL="$PACKAGE-$VERSION.tar.gz"
 WEB_SITE="http://flex.sourceforge.net/"
-WGET_URL="$SF_MIRROR/$PACKAGE/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+WGET_URL="https://github.com/westes/$PACKAGE/releases/download/v$VERSION/$TARBALL"
+HOST_ARCH="x86_64"
 
 DEPENDS="bison"
 BUILD_DEPENDS="bison"
@@ -17,11 +17,6 @@ BUILD_DEPENDS="bison"
 # Rules to configure and make the package.
 compile_rules()
 {
-	case "$ARCH" in
-		arm*)
-			export ac_cv_func_malloc_0_nonnull=yes
-			export ac_cv_func_realloc_0_nonnull=yes
-	esac
 	./configure $CONFIGURE_ARGS &&
 	make && make install
 }

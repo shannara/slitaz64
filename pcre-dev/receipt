@@ -1,13 +1,13 @@
 # SliTaz package receipt.
 
 PACKAGE="pcre-dev"
-VERSION="8.42"
+VERSION="8.44"
 CATEGORY="development"
 SHORT_DESC="Perl Compatible Regular Expressions, development files"
 MAINTAINER="shann@slitaz.org"
 LICENSE="BSD"
 WEB_SITE="http://www.pcre.org/"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 WANTED="pcre"
 DEPENDS="pcre pkg-config"

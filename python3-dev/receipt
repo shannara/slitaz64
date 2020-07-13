@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="python3-dev"
-VERSION="3.7.2"
+VERSION="3.8.3"
 CATEGORY="development"
 SHORT_DESC="The Python programming language devel files."
 MAINTAINER="shann@slitaz.org"
@@ -9,7 +9,7 @@ LICENSE="GPL"
 WANTED="python3"
 SOURCE="Python"
 WEB_SITE="http://www.python.org/"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="python3"
 
@@ -22,6 +22,6 @@ genpkg_rules()
 	chmod 755 $fs/usr/bin/*-config
 	# in python package now
 	python_version=${VERSION:0:3}
-	rm $fs/usr/include/python${python_version}m/pyconfig.h
+	#rm $fs/usr/include/python${python_version}m/pyconfig.h
 }
 

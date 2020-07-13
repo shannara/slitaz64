@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="wget"
-VERSION="1.19.5"
+VERSION="1.20.3"
 CATEGORY="network"
 SHORT_DESC="GNU Wget - non-interactive download of files from the Web"
 MAINTAINER="shann@slitaz.org"
