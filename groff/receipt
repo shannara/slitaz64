@@ -1,0 +1,33 @@
+# SliTaz package receipt.
+
+PACKAGE="groff"
+VERSION="1.22.4"
+CATEGORY="utilities"
+SHORT_DESC="The GNU troff text-formatting system"
+MAINTAINER="shann@slitaz.org"
+LICENSE="GPL3"
+WEB_SITE="https://www.gnu.org/software/groff/"
+TARBALL="$PACKAGE-$VERSION.tar.gz"
+WGET_URL="$GNU_MIRROR/$PACKAGE/$TARBALL"
+HOST_ARCH="x86_64"
+
+BUILD_DEPENDS="perl texinfo"
+
+# Rules to configure and make the package.
+compile_rules()
+{
+	cd $src
+	PAGE=A4 \
+	./configure --prefix=/usr &&
+	make && 
+	make DESTDIR=$install install
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+    mkdir -p $fs/usr/share
+    cp -a $_pkg/usr/bin $fs/usr
+    cp -a $_pkg/usr/lib $fs/usr
+    cp -a $_pkg/usr/share/groff $fs/usr/share
+}

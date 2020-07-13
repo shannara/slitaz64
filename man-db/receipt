@@ -1,0 +1,35 @@
+# SliTaz package receipt.
+
+PACKAGE="man-db"
+VERSION="2.8.4"
+CATEGORY="system-tools"
+SHORT_DESC="The on-line manual database"
+MAINTAINER="shann@slitaz.org"
+LICENSE="GPL2"
+WEB_SITE="http://www.nongnu.org/man-db/"
+TARBALL="$PACKAGE-$VERSION.tar.xz"
+WGET_URL="http://download.savannah.gnu.org/releases/man-db/$TARBALL"
+HOST_ARCH="x86_64"
+
+BUILD_DEPENDS="groff bzip2-dev xz-dev gettext-dev libpipeline-dev gdbm-dev \
+zlib-dev"
+
+# Rules to configure and make the package.
+compile_rules()
+{
+	./configure \
+	    --prefix=/usr \
+	    --libdir=/usr/lib${LIBDIRSUFFIX} \
+	    --sysconfdir=/etc \
+	    --localstatedir=/var \
+	    --mandir=/usr/man \
+	    $CONFIGURE_ARGS
+	make &&
+	make install-strip DESTDIR=$install
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+    cp -a $install/*    $fs
+}

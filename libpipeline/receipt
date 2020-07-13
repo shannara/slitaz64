@@ -1,0 +1,32 @@
+# SliTaz package receipt.
+
+PACKAGE="libpipeline"
+VERSION="1.5.0"
+CATEGORY="system-tools"
+SHORT_DESC="Pipeline manipulation library"
+MAINTAINER="shann@slitaz.org"
+LICENSE="GPL3"
+WEB_SITE="http://libpipeline.nongnu.org/"
+TARBALL="$PACKAGE-$VERSION.tar.gz"
+WGET_URL="http://download.savannah.gnu.org/releases/$PACKAGE/$TARBALL"
+HOST_ARCH="x86_64"
+
+BUILD_DEPENDS="check-dev"
+
+# Rules to configure and make the package.
+compile_rules()
+{
+	cd $src
+
+	./configure $CONFIGURE_ARGS
+	make &&
+	make DESTDIR=$install install
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+        mkdir -p $fs/usr/lib $fs/usr/share
+        cp -a $install/usr/lib/*.so* $fs/usr/lib
+	cp -a $install/usr/share/man $fs/usr/share/
+}

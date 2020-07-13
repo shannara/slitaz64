@@ -1,0 +1,22 @@
+# SliTaz package receipt.
+
+PACKAGE="libpipeline-dev"
+VERSION="1.5.0"
+CATEGORY="system-tools"
+SHORT_DESC="iPipeline manipulation library (development files)"
+MAINTAINER="shann@slitaz.org"
+LICENSE="GPL3"
+WEB_SITE="http://libpipeline.nongnu.org/"
+WANTED="libpipeline"
+HOST_ARCH="x86_64"
+
+DEPENDS="libpipeline"
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+        mkdir -p $fs/usr/lib
+	cp -a $install/usr/lib/*.*a $fs/usr/lib
+        cp -a $install/usr/include $fs/usr
+        cp -a $install/usr/lib/pkgconfig $fs/usr/lib
+}

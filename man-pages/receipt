@@ -1,0 +1,24 @@
+# SliTaz package receipt.
+
+PACKAGE="man-pages"
+VERSION="5.05"
+CATEGORY="doc"
+SHORT_DESC="Linux manual pages."
+MAINTAINER="shann@slitaz.org"
+LICENSE="GPL2"
+WEB_SITE="https://www.kernel.org/doc/man-pages/"
+TARBALL="$PACKAGE-$VERSION.tar.xz"
+WGET_URL="https://www.kernel.org/pub/linux/docs/man-pages/$TARBALL"
+HOST_ARCH="x86_64"
+
+# Rules to configure and make the package.
+compile_rules()
+{
+    make DESTDIR=$install install
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+    cp -a $install/*    $fs
+}
