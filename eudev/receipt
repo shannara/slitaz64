@@ -8,7 +8,7 @@ MAINTAINER="shann@slitaz.org"
 LICENSE="GPL2"
 TARBALL="$PACKAGE-$VERSION.tar.gz"
 WEB_SITE="https://dev.gentoo.org/~blueness/eudev/"
-WGET_URL="https://dev.gentoo.org/~/blueness/$PACKAGE/$TARBALL"
+WGET_URL="https://dev.gentoo.org/~blueness/$PACKAGE/$TARBALL"
 HOST_ARCH="i486 arm x86_64"
 
 DEPENDS=""
