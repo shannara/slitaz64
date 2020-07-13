@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="busybox"
-VERSION="1.23.2"
+VERSION="1.31.1"
 CATEGORY="base-system"
 SHORT_DESC="Busybox combines tiny versions of many common UNIX utilities."
 MAINTAINER="shann@slitaz.org"
@@ -9,45 +9,41 @@ LICENSE="GPL2"
 TARBALL="$PACKAGE-$VERSION.tar.bz2"
 WEB_SITE="http://www.busybox.net/"
 WGET_URL="http://www.busybox.net/downloads/$TARBALL"
-HOST_ARCH="i486 arm x86_64"
+HOST_ARCH="x86_64"
 
 DEPENDS="slitaz-base-files glibc-base ncurses-common"
-BUILD_DEPENDS="bzip2 pam pam-dev uclibc-cross-compiler-i486 \
-musl-libc-dev dietlibc"
+BUILD_DEPENDS="bzip2 libtirpc-dev"
 
 CONFIG_FILES="/etc/dnsd.conf /etc/inetd.conf /etc/udhcpd.conf \
 /etc/resolv.conf /etc/httpd.conf"
 AUFS_NOT_RAMFS="uclibc-cross-compiler-i486 is not compatible with aufs+tmpfs 8("
 
-# Handle cross compilation
-case "$ARCH" in
-	arm*) BUILD_DEPENDS="bzip2" ;;
-	x86_64) BUILD_DEPENDS="bzip2" ;;
-esac
-
 # Busybox patches
 apply_bb_patchs()
 {
+    # keep test || return 1
+ 
     while read file; do
     	[ -f done.$file ] && continue
     	echo "Apply $file..."
-    	patch -p1 < $stuff/$PACKAGE-${VERSION%.*}-$file || return 1
+    	patch -p1 < $stuff/patches/$file
 	touch done.$file
     done <<EOT
 tar.u
 stat.u
 ris.u
 zmodules.u
-printable.u
 cmdline.u
 diff.u
 diet.u
 losetup.u
 fbvnc.u
 cpio.u
-ftpd.u
-dpkgxz.u
 shutdown.u
+scriptreplay.u
+mkfs_vfat.u
+ash.u
+httpd.u
 EOT
     cp $stuff/$PACKAGE-${VERSION%.*}.config .config
 }
@@ -55,42 +51,12 @@ EOT
 # Rules to configure and make the package.
 compile_rules()
 {
-	case "$ARCH" in
-		arm*)
-			echo "cook: CROSS_COMPILE=$CROSS_COMPILE"
-			apply_bb_patchs &&
-			cp $stuff/arm/$PACKAGE.config .config
-			make oldconfig &&
-			make && make install || return 1
-			chmod 4755 $src/_install/bin/busybox ;;
-		i?86|x86_64)
-			if [ "$ARCH" == "x86_64" && "$SLITAZ_ARCH" != "$ARCH" ];  then
-				echo "cook: CROSS_COMPILE=$CROSS_COMPILE"
-                        	apply_bb_patchs &&
-                        	cp $stuff/x86_64/$PACKAGE.config .config
-                        	make -k oldconfig &&
-                        	make -k && make install || return 1
-                        	chmod 4755 $src/_install/bin/busybox 
-			else
-				apply_bb_patchs &&
-                        	cp $stuff/$PACKAGE-1.23.config-custom .config
-				make -k oldconfig &&
-				make -k && make install || return 1
-		    		strip --strip-unneeded -R .eh_frame -R .eh_frame_hdr \
-				$src/_install/bin/busybox
-
-				# prepare ssfs-busybox package
-				rootfs=$src/ssfs-busybox/usr/share/ssfs/rootfs
-				mkdir -p $rootfs/etc
-				cp $stuff/$PACKAGE-${VERSION%.*}.config-ssfs .config
-				make oldconfig && make busybox &&
-				make CONFIG_PREFIX=$rootfs install || return 1
-				cp $stuff/busybox.conf-ssfs $rootfs/etc/busybox.conf
-				chown -R 0.0 $rootfs/etc
-				chmod 0600 $rootfs/etc/busybox.conf
-				chmod 4755 $rootfs/bin/busybox 
-			fi ;;
-	esac
+	apply_bb_patchs &&
+	patch -p1 < $stuff/patches/$PACKAGE-${VERSION%.*}-glibc.patch &&
+	#cp $stuff/$PACKAGE-${VERSION.*}.config-custom .config &&
+	make -k oldconfig &&
+	make -k && make install || return 1
+	strip --strip-unneeded -R .eh_frame -R .eh_frame_hdr $src/_install/bin/busybox
 }
 
 # Cross compilation check.

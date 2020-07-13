@@ -1,0 +1,21 @@
+# SliTaz package receipt.
+
+PACKAGE="libtirpc-dev"
+VERSION="1.2.5"
+CATEGORY="system-tools"
+SHORT_DESC="Transport-Independent RPC library (development files)"
+MAINTAINER="shann@slitaz.org"
+LICENSE="BSD"
+WANTED="libtirpc"
+WEB_SITE="https://sourceforge.net/projects/libtirpc/"
+HOST_ARCH="x86_64"
+
+DEPENDS="libtirpc"
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()             
+{
+        mkdir -p $fs/usr $fs/usr/lib
+        cp -a $install/usr/include $fs/usr
+        cp -a $install/usr/lib/pkgconfig $fs/usr/lib
+}

@@ -1,0 +1,36 @@
+# SliTaz package receipt.
+
+PACKAGE="libtirpc"
+VERSION="1.2.5"
+CATEGORY="system-tools"
+SHORT_DESC="Transport-Independent RPC library"
+MAINTAINER="shann@slitaz.org"
+LICENSE="BSD"
+WEB_SITE="https://sourceforge.net/projects/libtirpc/"
+TARBALL="$PACKAGE-$VERSION.tar.bz2"
+WGET_URL="$SF_MIRROR/$PACKAGE/$TARBALL"
+HOST_ARCH="x86_64"
+
+# Rules to configure and make the package.
+compile_rules()
+{
+        ./configure \
+            --prefix=/usr \
+            --sysconfdir=/etc \
+            --disable-static \
+            --disable-gssapi \
+            $CONFIGURE_ARGS &&
+        make && make DESTDIR=$DESTDIR install
+
+        mkdir -p $install/lib
+        mv -v $install/usr/lib/libtirpc.so.* $install/lib
+        ln -sfv libtirpc.so.3 $install/lib/libtirpc.so
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()             
+{
+        mkdir $fs/lib
+        cp -a $install/etc $fs     
+        cp -a $install/lib/*.so* $fs/lib     
+}
