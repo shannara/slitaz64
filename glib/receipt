@@ -13,7 +13,7 @@ HOST_ARCH="i486 arm x86_64"
 
 DEPENDS="pcre libffi libxml2 elfutils"
 BUILD_DEPENDS="pcre-dev libffi-dev gettext zlib-dev perl python3-dev \
-elfutils-dev libxml2-dev libxml2-tools automake"
+elfutils-dev libxml2-dev libxml2-tools automake util-linux-mount-dev"
 
 # Handle cross comilation. Use host Perl, Python, etc
 case "$ARCH" in
