@@ -21,6 +21,8 @@ compile_rules()
 	cd $src
 	patch -p0 < $stuff/atomic_compare_exchange.patch
 
+        CFLAGS="-march=nocona -Os -pipe -fomit-frame-pointer -fPIC"
+
 	cd $src/build_unix
 	../dist/configure \
 		--enable-cxx \
