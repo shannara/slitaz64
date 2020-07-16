@@ -49,7 +49,7 @@ compile_rules()
             -Duseshrplib  \
             -Dusethreads &&
 	make &&
-	make install
+	make DESTDIR=$install install
 
 	find $install -type f -exec chmod u+w '{}' \; # 444->644, 555->755
 }
