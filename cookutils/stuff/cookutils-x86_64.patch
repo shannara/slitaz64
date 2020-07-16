@@ -1,5 +1,5 @@
---- cook.orig
-+++ cook
+--- a/cook
++++ b/cook
 @@ -358,6 +358,16 @@
  	separator; newline
  }
@@ -49,8 +49,8 @@
  			# CROSS_COMPILE is used by at least Busybox and the kernel to set
  			# the cross-tools prefix. Sysroot is the root of our target arch
  			sysroot=$CROSS_TREE/sysroot
---- cook.conf.orig
-+++ cook.conf
+--- a/cook.conf
++++ b/cook.conf
 @@ -38,7 +38,7 @@
  aufs-utils aufs m4 syslinux-extra pcre pcre-dev bash xorg-dev mercurial"
  
