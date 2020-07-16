@@ -29,7 +29,7 @@ esac
 # Rules to configure and make the package.
 compile_rules()
 {
-	patch -p1 -i $stuff/tazpkg-5.3.3-patch-x86_64.patch
+	patch -p1 < $stuff/tazpkg-5.3.3-patch-x86_64.patch
 	make && make DESTDIR=$DESTDIR VERSION=$VERSION install
 }
 

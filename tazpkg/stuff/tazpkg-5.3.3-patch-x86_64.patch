@@ -1,5 +1,5 @@
---- tazpkg.orig
-+++ tazpkg
+--- a/tazpkg
++++ b/tazpkg
 @@ -23,8 +23,8 @@
  . /etc/slitaz/slitaz.conf
  . /etc/slitaz/tazpkg.conf
