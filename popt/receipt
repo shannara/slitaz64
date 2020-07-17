@@ -6,9 +6,9 @@ CATEGORY="system-tools"
 SHORT_DESC="Library for parsing command line options."
 MAINTAINER="shann@slitaz.org"
 LICENSE="MIT"
-TARBALL="$PACKAGE-$VERSION.tar.xz"
+TARBALL="$PACKAGE-$VERSION.tar.gz"
 WEB_SITE="http://directory.fsf.org/project/popt/"
-WGET_URL="https://mirrors.slackware.com/slackware/slackware64-current/source/l/$PACKAGE/$TARBALL"
+WGET_URL="ftp://anduin.linuxfromscratch.org/BLFS/$PACKAGE/$TARBALL"
 HOST_ARCH="x86_64"
 
 # Rules to configure and make the package.
