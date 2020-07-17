@@ -12,7 +12,7 @@ WGET_URL="https://www.kernel.org/pub/linux/utils/util-linux/v${VERSION:0:4}/$TAR
 HOST_ARCH="i486 arm x86_64"
 
 DEPENDS=""
-BUILD_DEPENDS="eudev-dev ncursesw-dev libcap-ng-dev readline-dev python3-dev file"
+BUILD_DEPENDS="ncursesw-dev libcap-ng-dev readline-dev python3-dev file"
 SPLIT="util-linux-blkid util-linux-blkid-dev util-linux-blockdev \
 util-linux-cfdisk util-linux-column util-linux-cramfs util-linux-eject \
 util-linux-fdisk util-linux-fdisk-dev util-linux-flock util-linux-getopt \
