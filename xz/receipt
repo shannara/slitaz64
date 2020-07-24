@@ -30,4 +30,17 @@ genpkg_rules()
 {
 	mkdir -p $fs/usr/bin $fs/usr/lib
 	cp -a $install/usr/bin/xz $fs/usr/bin
+        cp -a $install/usr/bin/unxz $fs/usr/bin	
 }
+
+# Prevent erasing busybox...
+pre_install()
+{
+        rm -f "$1/usr/bin/unxz"
+}
+
+post_remove()
+{
+        ln -s /bin/busybox /usr/bin/unxz
+}
+
