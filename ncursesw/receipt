@@ -39,6 +39,7 @@ compile_rules()
 		--without-debug \
 		--without-ada \
 		--enable-widec \
+                --enable-pc-files \
 		--with-build-cc="gcc -D_GNU_SOURCE" \
 		$CONFIGURE_ARGS &&
 	make && make install
