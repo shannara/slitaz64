@@ -1,0 +1,39 @@
+# SliTaz package receipt.
+
+PACKAGE="libnsl"
+VERSION="1.2.0"
+CATEGORY="network"
+SHORT_DESC="Public client interface for NIS(YP) and NIS+"
+MAINTAINER="shann@slitaz.org"
+LICENSE="LGPL2.1"
+WEB_SITE="https://github.com/thkukuk/libnsl/"
+TARBALL="$PACKAGE-$VERSION.tar.gz"
+WGET_URL="https://github.com/thkukuk/libnsl/archive/v$VERSION/$TARBALL"
+HOST_ARCH="x86_64"
+
+BUILD_DEPENDS="automake gettext libtool libtirpc-dev rpcsvc-proto"
+DEPENDS="libtirpc"
+
+compile_rules() {
+	autoreconf -fi &&
+	./configure \
+	    --sysconfdir=/etc \
+	    --disable-static \
+		$CONFIGURE_ARGS &&
+	make &&
+	make install || return 1
+
+	mkdir -p $install/lib
+	mv $install/usr/lib/libnsl.so.2*  $install/lib
+	ln -sfv ../../lib/libnsl.so.2.0.0 $install/usr/lib/libnsl.so
+}
+
+# Rules to gen a SliTaz package suitable for Tazpkg.
+genpkg_rules()
+{
+    mkdir -p $fs/usr/lib $fs/lib
+
+    cp -a $install/usr/lib/*.so* $fs/usr/lib
+    cp -a $install/lib/*.so* $fs/lib
+}
+
