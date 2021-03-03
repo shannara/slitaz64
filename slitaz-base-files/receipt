@@ -35,7 +35,12 @@ CONFIG_FILES="
 # Rules to configure and make the package.
 compile_rules()
 {
-	make DESTDIR=$DESTDIR install
+    case "$ARCH" in
+	x86_64)
+            sed -i 's/i486/x86_64/' "$src/rootfs/etc/slitaz/slitaz.conf";;
+    esac
+
+    make DESTDIR=$DESTDIR install
 }
 
 # Rules to gen a SliTaz package suitable for Tazpkg.
