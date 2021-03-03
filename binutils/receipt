@@ -14,7 +14,7 @@ PROVIDE="libbfd"
 TAGS="assembler linker"
 HOST_ARCH="x86_64"
 
-DEPENDS="glibc zlib"
+DEPENDS="flex libtinfo glibc zlib"
 BUILD_DEPENDS="glibc-dev zlib-dev texinfo"
 
 # Rules to configure and make the package.
