@@ -37,7 +37,12 @@ compile_rules()
 {
     case "$ARCH" in
 	x86_64)
-            sed -i 's/i486/x86_64/' "$src/rootfs/etc/slitaz/slitaz.conf";;
+            sed -i 's/i486/x86_64/' "$src/rootfs/etc/slitaz/slitaz.conf"
+            # use /lib64 for x86_64
+            mv $src/rootfs/lib $src/rootfs/lib64
+            mv $src/rootfs/usr/lib $src/rootfs/usr/lib64
+            ln -s lib64 $src/rootfs/lib
+            ln -s lib64 $src/rootfs/usr/lib;;
     esac
 
     make DESTDIR=$DESTDIR install
@@ -46,6 +51,11 @@ compile_rules()
 # Rules to gen a SliTaz package suitable for Tazpkg.
 genpkg_rules()
 {
+	libdir="lib"
+	if [ "$ARCH" == "x86_64" ]; then
+		libdir="lib64"
+	fi
+
 	mkdir -p \
 		$fs/bin \
 		$fs/dev \
@@ -62,7 +72,7 @@ genpkg_rules()
 		$fs/tmp \
 		$fs/usr/bin \
 		$fs/usr/games \
-		$fs/usr/lib \
+		$fs/usr/$libdir \
 		$fs/usr/sbin \
 		$fs/usr/share/doc \
 		$fs/var/cache \
@@ -95,7 +105,7 @@ genpkg_rules()
 	ln -s /proc/mounts mtab
 
 	# Fix httphelper link
-	cd $fs/usr/lib/slitaz
+	cd $fs/usr/$libdir/slitaz
 	ln -s httphelper.sh httphelper
 
 	# Update copyright year
