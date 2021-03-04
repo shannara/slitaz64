@@ -16,7 +16,6 @@ BUILD_DEPENDS="bzip2 libtirpc-dev"
 
 CONFIG_FILES="/etc/dnsd.conf /etc/inetd.conf /etc/udhcpd.conf \
 /etc/resolv.conf /etc/httpd.conf"
-AUFS_NOT_RAMFS="uclibc-cross-compiler-i486 is not compatible with aufs+tmpfs 8("
 
 # Busybox patches
 apply_bb_patchs()
@@ -43,7 +42,6 @@ shutdown.u
 scriptreplay.u
 mkfs_vfat.u
 ash.u
-httpd.u
 EOT
     cp $stuff/$PACKAGE-${VERSION%.*}.config .config
 }
