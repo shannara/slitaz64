@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="openssl"
-VERSION="1.1.1g"
+VERSION="1.1.1i"
 CATEGORY="security"
 SHORT_DESC="Open source Secure Sockets Layer."
 MAINTAINER="shann@slitaz.org"

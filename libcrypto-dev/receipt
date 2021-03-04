@@ -1,7 +1,7 @@
 # SliTaz package receipt.
 
 PACKAGE="libcrypto-dev"
-VERSION="1.1.1g"
+VERSION="1.1.1i"
 CATEGORY="development"
 SHORT_DESC="General purpose cryptographic shared library devel files."
 MAINTAINER="shann@slitaz.org"
