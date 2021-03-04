@@ -52,8 +52,8 @@
  	fi
  	action "Installing \$PACKAGE..."
 +
-+       # If we on x86_64, move /lib,/usr/lib as /lib64,/usr/lib64
-+       if [ -d $ROOT/lib64 ]; then
++       # If we on x86_64, move /lib,/usr/lib as /lib64,/usr/lib64 (skip slitaz-base-files)
++       if [ -d $ROOT/lib64 ] && [ $PACKAGE != "slitaz-base-files" ]; then
 +           [ -d fs/lib ] && [ ! -h fs/lib ] && [ ! -d fs/lib64 ] && mv fs/lib fs/lib64
 +           [ -d fs/usr/lib ] && [ ! -h fs/usr/lib ] && [ ! -d fs/usr/lib64 ] && mv fs/usr/lib fs/usr/lib64
 +           [ -d fs/lib ] && [ -d fs/lib64 ] && mv fs/lib/* fs/lib64/ && rm -rf fs/lib
